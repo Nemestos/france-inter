@@ -1,0 +1,52 @@
+version: 2
+services:
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - db
+    volumes:
+      - ./minio/.minio/data:/export
+      - ./minio/.minio/config:/root/.minio
+    environment:
+      - "MINIO_ACCESS_KEY=${MINIO_ACCESS}"
+      - "MINIO_SECRET_KEY=${MINIO_SECRET}"
+    command: server /export --console-address ":9001"
+
+  mongodb:
+    restart: always
+    image: mongo:latest
+    ports:
+      - "${MONGODB_PORT}:${MONGODB_PORT}"
+    volumes:
+      - "./database:/data/db"
+    command: mongod --quiet --logpath /dev/null --port ${MONGODB_PORT}
+
+    networks:
+      - db
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_ACCESS} ${MINIO_SECRET};
+      /usr/bin/mc mb myminio/${MINIO_BUCKET};
+      /usr/bin/mc policy download myminio/${MINIO_BUCKET};
+      /usr/bin/mc policy set public myminio/${MINIO_BUCKET};
+      exit 0;
+      "
+    networks:
+      - db
+      
+networks:
+  db:
+    driver: bridge
+  
+  
+volumes:
+  db:
+    driver: local
