@@ -1,5 +1,31 @@
 version: "2"
 services:
+  app:
+    build:
+      dockerfile: services/api/Dockerfile
+      context: ./
+      target: deps
+
+    container_name: app
+    restart: always
+    command: pnpm run dev
+
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+
+    env_file:
+      - .env
+
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    depends_on:
+      - minio
+      - mongodb
+    networks:
+      - db
+      - bullmq
+
   minio:
     image: minio/minio
     ports:
@@ -31,21 +57,29 @@ services:
     depends_on:
       - minio
     entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_ACCESS} ${MINIO_SECRET};
-      /usr/bin/mc mb myminio/${MINIO_BUCKET};
-      /usr/bin/mc policy download myminio/${MINIO_BUCKET};
-      /usr/bin/mc policy set public myminio/${MINIO_BUCKET};
-      exit 0;
-      "
+      /bin/sh -c " /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_ACCESS} ${MINIO_SECRET}; /usr/bin/mc mb myminio/${MINIO_BUCKET}; /usr/bin/mc policy download myminio/${MINIO_BUCKET}; /usr/bin/mc policy set public myminio/${MINIO_BUCKET}; exit 0; "
     networks:
       - db
-      
+
+  redis:
+    image: redis:latest
+    ports:
+      - '${REDIS_PORT:-6379}'
+    volumes:
+      - './redis-data:/data'
+    networks:
+      - bullmq
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      timeout: 5s
+      retries: 3
+
 networks:
   db:
     driver: bridge
-  
-  
+  bullmq:
+    driver: bridge
+
 volumes:
   db:
     driver: local

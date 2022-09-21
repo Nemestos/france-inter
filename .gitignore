@@ -104,3 +104,5 @@ dist
 .tern-port
 
 database/
+redis-data/
+pnpm-lock.yaml
