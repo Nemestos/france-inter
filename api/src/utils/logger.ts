@@ -1,10 +1,13 @@
-import pino from "pino";
-
-export const Logger = pino({
-    transport: {
-        target: "pino-pretty",
-        options: {
-            colorize: true
-        }
-    }
-})
+export const envToLogger = {
+    development: {
+        transport: {
+            target: 'pino-pretty',
+            options: {
+                translateTime: 'HH:MM:ss Z',
+                ignore: 'pid,hostname',
+            },
+        },
+    },
+    production: true,
+    test: false,
+}
