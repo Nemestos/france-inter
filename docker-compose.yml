@@ -4,11 +4,11 @@ services:
     build:
       dockerfile: services/api/Dockerfile
       context: ./
-      target: builder
+      target: deps
 
     container_name: app
     restart: always
-    command: npm run dev
+    command: npm run start:dev
 
     volumes:
       - ./api:/usr/src/app
