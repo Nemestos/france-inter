@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import Joi from 'joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TasksModule } from './tasks/tasks.module';
 import validate from './utils/env.validation';
 
 @Module({
@@ -10,6 +12,17 @@ import validate from './utils/env.validation';
     ConfigModule.forRoot({
       validate,
     }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => {
+        const host = config.get('MONGODB_HOST');
+        const port = config.get('MONGODB_PORT');
+        const db = config.get('MONGODB_DB');
+        return `mongodb://${host}:${port}/${db}`;
+      },
+    }),
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

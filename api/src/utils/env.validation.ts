@@ -1,7 +1,16 @@
 import { plainToInstance } from 'class-transformer';
-import { IsNumber, validateSync } from 'class-validator';
+import { IsNumber, IsString, validateSync } from 'class-validator';
 
 class EnvVars {
+  @IsString()
+  MONGODB_HOST: string;
+
+  @IsString()
+  MONGODB_PORT: string;
+
+  @IsString()
+  MONGODB_DB: string;
+
   @IsNumber()
   API_PORT: number;
 }
