@@ -7,5 +7,3 @@ export class CreateTaskDto {
   @IsNumber()
   maxPersons: number;
 }
-
-export type GetTaskDto = CreateTaskDto;

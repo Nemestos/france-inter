@@ -30,6 +30,7 @@
     "class-validator": "^0.13.2",
     "joi": "^17.6.1",
     "mongoose": "^6.6.1",
+    "nestjs-minio-client": "^2.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

@@ -3,6 +3,21 @@ import { IsNumber, IsString, validateSync } from 'class-validator';
 
 class EnvVars {
   @IsString()
+  MINIO_HOST: string;
+
+  @IsNumber()
+  MINIO_PORT: number;
+
+  @IsString()
+  MINIO_ACCESS: string;
+
+  @IsString()
+  MINIO_SECRET: string;
+
+  @IsString()
+  MINIO_BUCKET: string;
+
+  @IsString()
   MONGODB_HOST: string;
 
   @IsString()
