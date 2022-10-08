@@ -1,9 +1,11 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumberString, IsString } from 'class-validator';
 
 export class CreateTaskDto {
   @IsString()
+  @IsNotEmpty()
   text: string;
 
-  @IsNumber()
+  @IsNumberString()
+  @IsNotEmpty()
   maxPersons: number;
 }

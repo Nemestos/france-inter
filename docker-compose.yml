@@ -21,7 +21,7 @@ services:
       - "${API_PORT}:${API_PORT}"
     depends_on:
       - minio
-      - mongodb
+      - db
     networks:
       - db
       - bullmq
@@ -40,7 +40,7 @@ services:
       - "MINIO_SECRET_KEY=${MINIO_SECRET}"
     command: server /export --console-address ":9001"
 
-  mongodb:
+  db:
     restart: always
     image: mongo:latest
     ports:
@@ -58,12 +58,9 @@ services:
       - minio
     entrypoint: >
       /bin/sh -c "/usr/bin/mc config host add myminio http://minio:9000 ${MINIO_ACCESS} ${MINIO_SECRET}; 
-      /usr/bin/mc mb myminio/${MINIO_IMAGES}; 
-      /usr/bin/mc mb myminio/${MINIO_AUDIOS}; 
-      /usr/bin/mc policy download myminio/${MINIO_IMAGES}; 
-      /usr/bin/mc policy set public myminio/${MINIO_IMAGES};
-      /usr/bin/mc policy download myminio/${MINIO_AUDIOS}; 
-      /usr/bin/mc policy set public myminio/${MINIO_AUDIOS};  
+      /usr/bin/mc mb myminio/${MINIO_BUCKET}; 
+      /usr/bin/mc policy download myminio/${MINIO_BUCKET}; 
+      /usr/bin/mc policy set public myminio/${MINIO_BUCKET};
       exit 0; "
     networks:
       - db

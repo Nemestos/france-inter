@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Task, TaskSchema } from './task.schema';
+import { MinioClientModule } from 'src/minio-client/minio-client.module';
+import { Audio, AudioSchema } from './audio.schema';
+import { Image, ImageSchema } from './image.schema';
+import { Output, OutputSchema } from './output.schema';
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
 
@@ -8,10 +11,19 @@ import { TasksService } from './tasks.service';
   imports: [
     MongooseModule.forFeature([
       {
-        name: Task.name,
-        schema: TaskSchema,
+        name: Output.name,
+        schema: OutputSchema,
+      },
+      {
+        name: Image.name,
+        schema: ImageSchema,
+      },
+      {
+        name: Audio.name,
+        schema: AudioSchema,
       },
     ]),
+    MinioClientModule,
   ],
   controllers: [TasksController],
   providers: [TasksService],
