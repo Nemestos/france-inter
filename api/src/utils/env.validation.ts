@@ -26,6 +26,12 @@ class EnvVars {
   @IsString()
   MONGODB_DB: string;
 
+  @IsString()
+  REDIS_HOST: string;
+
+  @IsNumber()
+  REDIS_PORT: number;
+
   @IsNumber()
   API_PORT: number;
 }

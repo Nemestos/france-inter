@@ -43,15 +43,15 @@ export class TasksController {
     @Body() body: CreateTaskDto,
   ) {
     try {
-      this.minioClientService.upload(image);
+      const { url } = await this.minioClientService.upload(image);
+      const res = await this.tasksService.createTask(body, url);
+      if (res) {
+        return 'la task a bien été lancé et le fichier upload';
+      }
+      return 'Problème lors du lancement de la task';
     } catch (err) {
       throw new HttpException(err, 500);
     }
-    const res = this.tasksService.createTask(body);
-    if (res) {
-      return 'la task a bien été lancé et le fichier upload';
-    }
-    return 'Problème lors du lancement de la task';
   }
 
   @Get()
