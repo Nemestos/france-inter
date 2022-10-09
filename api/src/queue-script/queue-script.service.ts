@@ -17,4 +17,15 @@ export class QueueScriptService {
     });
     return job;
   }
+  async getAllJobs(): Promise<Job[]> {
+    const jobs = await this.scriptQueue.getJobs([
+      'active',
+      'completed',
+      'delayed',
+      'failed',
+      'paused',
+      'waiting',
+    ]);
+    return jobs;
+  }
 }
