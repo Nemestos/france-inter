@@ -23,7 +23,7 @@ export class MinioClientService {
   public async upload(
     file: BufferedFile,
     bucketName: string = this.bucketName,
-  ) {
+  ): Promise<{ url: string }> {
     if (!(file.mimetype.includes('jpeg') || file.mimetype.includes('png'))) {
       throw new HttpException(
         'File type not supported(png, jpeg)',
@@ -61,11 +61,9 @@ export class MinioClientService {
       },
     );
     return {
-      url: `${this.config.get<string>(
-        'MINIO_ENDPOINT',
-      )}:${this.config.get<string>('MINIO_PORT')}/${this.config.get<string>(
-        'MINIO_BUCKET_NAME',
-      )}/${fileName}`,
+      url: `${this.config.get<string>('MINIO_HOST')}:${this.config.get<string>(
+        'MINIO_PORT',
+      )}/${this.config.get<string>('MINIO_BUCKET')}/${fileName}`,
     };
   }
 }

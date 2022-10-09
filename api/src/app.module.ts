@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { MinioClientModule } from './minio-client/minio-client.module';
+import { QueueScriptModule } from './queue-script/queue-script.module';
 import validate from './utils/env.validation';
 
 @Module({
@@ -27,6 +28,7 @@ import validate from './utils/env.validation';
     }),
     TasksModule,
     MinioClientModule,
+    QueueScriptModule,
   ],
   controllers: [AppController],
   providers: [AppService],
