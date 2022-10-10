@@ -6,56 +6,86 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface HeadlineSystem {
+        "headline": string;
+    }
+    interface ItemSystem {
+        "active": boolean;
+        "attribute": string | boolean;
+        "checked": boolean;
+        "invalide": boolean;
+        "toggle": boolean;
+        "value": string;
+    }
+    interface ShowcaseUi {
+        "displaying": string;
+        "imageData": string;
+        "persons": number;
+        "username": string;
     }
 }
+export interface ItemSystemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLItemSystemElement;
+}
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLHeadlineSystemElement extends Components.HeadlineSystem, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLHeadlineSystemElement: {
+        prototype: HTMLHeadlineSystemElement;
+        new (): HTMLHeadlineSystemElement;
+    };
+    interface HTMLItemSystemElement extends Components.ItemSystem, HTMLStencilElement {
+    }
+    var HTMLItemSystemElement: {
+        prototype: HTMLItemSystemElement;
+        new (): HTMLItemSystemElement;
+    };
+    interface HTMLShowcaseUiElement extends Components.ShowcaseUi, HTMLStencilElement {
+    }
+    var HTMLShowcaseUiElement: {
+        prototype: HTMLShowcaseUiElement;
+        new (): HTMLShowcaseUiElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "headline-system": HTMLHeadlineSystemElement;
+        "item-system": HTMLItemSystemElement;
+        "showcase-ui": HTMLShowcaseUiElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+    interface HeadlineSystem {
+        "headline"?: string;
+    }
+    interface ItemSystem {
+        "active"?: boolean;
+        "attribute"?: string | boolean;
+        "checked"?: boolean;
+        "invalide"?: boolean;
+        "onItemClick"?: (event: ItemSystemCustomEvent<MouseEvent>) => void;
+        "onItemToggle"?: (event: ItemSystemCustomEvent<boolean>) => void;
+        "toggle"?: boolean;
+        "value"?: string;
+    }
+    interface ShowcaseUi {
+        "displaying"?: string;
+        "imageData"?: string;
+        "persons"?: number;
+        "username"?: string;
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "headline-system": HeadlineSystem;
+        "item-system": ItemSystem;
+        "showcase-ui": ShowcaseUi;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "headline-system": LocalJSX.HeadlineSystem & JSXBase.HTMLAttributes<HTMLHeadlineSystemElement>;
+            "item-system": LocalJSX.ItemSystem & JSXBase.HTMLAttributes<HTMLItemSystemElement>;
+            "showcase-ui": LocalJSX.ShowcaseUi & JSXBase.HTMLAttributes<HTMLShowcaseUiElement>;
         }
     }
 }
