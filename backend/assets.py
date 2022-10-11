@@ -23,8 +23,11 @@ def loadEnvVar():
             
         elif (key[0] == "AZURE_KEY"):
             AZURE_KEY=key[1]
+         
+        elif (key[0] == "AZURE_ENDPOINT_IMAGE"):   
+            AZURE_ENDPOINT_IMAGE=key[1]
            
-    return MONGODB_HOST, MONGODB_PORT, MONGODB_DB, AZURE_KEY
+    return MONGODB_HOST, MONGODB_PORT, MONGODB_DB, AZURE_KEY, AZURE_ENDPOINT_IMAGE
 
 def mongoDbConnect(envVar):    
     try:

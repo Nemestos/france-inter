@@ -1,8 +1,9 @@
 # import modules
 from email.mime import image
 from assets import hashfile, mongoDbConnect, loadEnvVar, checkIfExist, initDb
+from azureDetect import azureDetect
 
-def scan(maxpeople, file, text, language, init):
+def scan(maxpeople, file, text, language, init, verbose):
     fileName = file.split('/')[-1]
     languagesArray = language.split(',')
     detected = 0
@@ -30,14 +31,20 @@ def scan(maxpeople, file, text, language, init):
         checkResult = checkIfExist(imagecol, 'hash', fileHashed)
     except:
         return 1, "can't use checkIfExist function"
-
-    # print(checkResult)
+    
+    if (verbose):
+        print(checkResult)
+        print(envVar[4], envVar[3])
     
     if (checkResult[0] == False):
+        try:
+            detected = azureDetect(envVar[4], envVar[3], file)
+        except:
+            return 1, "can't detect person"
         
-        # Scan number of people
-
         imageDataIn = {"hash": fileHashed, "path": file, "detected": detected}
+        if (verbose):
+            print(imageDataIn)
         imageDataId = imagecol.insert_one(imageDataIn).inserted_id
     else:
         detected = checkResult[1]["detected"]

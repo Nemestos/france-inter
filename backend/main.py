@@ -23,7 +23,7 @@ if __name__ == "__main__":
         print('Init is %r' % args.init)
 
     try :
-        result = scan(args.maxpeople, args.path, args.text, args.language, args.init)
+        result = scan(args.maxpeople, args.path, args.text, args.language, args.init, args.debug)
         if (result[0] != 0):
             print(f'\nAn error append with the exit code: {result[0]}\n\nerror:\n  {result[1]}\n')
         else:
