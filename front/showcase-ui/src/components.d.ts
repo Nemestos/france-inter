@@ -20,6 +20,7 @@ export namespace Components {
     interface ShowcaseUi {
         "displaying": string;
         "imageData": string;
+        "newMessage": string;
         "persons": number;
         "username": string;
     }
@@ -70,6 +71,7 @@ declare namespace LocalJSX {
     interface ShowcaseUi {
         "displaying"?: string;
         "imageData"?: string;
+        "newMessage"?: string;
         "persons"?: number;
         "username"?: string;
     }

@@ -1,7 +1,7 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import '@ionic/core';
 
-const DEFAULT_DISPLAY_TEXT = 'Respectez le nombre de personne autorisé dans cette pièce, please'
+const DEFAULT_DISPLAY_TEXT = 'Respectez le nombre de personne autorisé dans cette pièce, please';
 const DEFAULT_PERSON_DETECTED = 5;
 const DEFAULT_IMAGE_DATA = 'random-image.jpeg';
 
@@ -11,10 +11,14 @@ const DEFAULT_IMAGE_DATA = 'random-image.jpeg';
   shadow: true,
 })
 export class ShowcaseUi {
-  @Prop() username: string = 'default-name';
+  @Prop() username: string = 'Administateur';
   @Prop() displaying: string = DEFAULT_DISPLAY_TEXT;
   @Prop() persons: number = DEFAULT_PERSON_DETECTED;
-  @Prop() imageData: string = DEFAULT_IMAGE_DATA
+  @Prop() imageData: string = DEFAULT_IMAGE_DATA;
+  @Prop({ reflect: true }) newMessage: string;
+
+  @State() modeStatus: boolean = true;
+  @State() toggleStatus: boolean;
 
   render() {
     return (
@@ -25,7 +29,7 @@ export class ShowcaseUi {
             Radio France Surveillance
           </div>
 
-        {/* Username login */}
+          {/* Username login */}
           <div class="username-wrapper">
             {this.username}
             <ion-icon class="icon-user" name="person-outline"></ion-icon>
@@ -41,7 +45,6 @@ export class ShowcaseUi {
             </div>
             <div class="image-insert"></div>
             <div class="camera-actions">
-              <ion-icon class="icon-up" name="cloud-upload-outline"></ion-icon>
 
               <ion-icon class="arrow-left" name="arrow-back"></ion-icon>
               <ion-icon class="arrow-right" name="arrow-forward"></ion-icon>
@@ -57,36 +60,70 @@ export class ShowcaseUi {
           </div>
 
           <div class="panel-infos">
-            <div class="studio-title">
-              Studio
-            </div>
-            <headline-system headline="editeur" />
-            <item-system 
-              active attribute="Selecteur" 
-              value="Nombre de personne autorisé">
-              <ion-input class="input-number"
-              type="number"
-              value="0"></ion-input>
+            <div class="studio-title">Upload studio img
+            <ion-icon class="icon-up" name="cloud-upload-outline"></ion-icon></div>
+            <headline-system headline="Editeur" />
+            <item-system active attribute="Selecteur" value="Nombre de personne autorisé">
+              <ion-input class="input-number" type="number" value="0" max="20" min="0"></ion-input>
             </item-system>
             <headline-system headline="Modes Editeur" />
-            <item-system 
-              active attribute="Mode par default" 
-              value="Envoie un messsage par default">
-            </item-system>
-            <item-system 
-              active invalide attribute="Mode" 
+            <item-system
+              active={this.modeStatus === undefined}
+              invalide={this.modeStatus !== undefined}
+              attribute="Mode par default"
+              value="Envoie un messsage par default"
+            ></item-system>
+            <item-system
+              active={this.modeStatus !== undefined}
+              invalide={this.modeStatus === undefined}
+              attribute="Mode"
               value="Envoie un nouveau message"
-              toggle onChange={() => this._handleToggle()}>
-             
-            </item-system>
+              toggle
+              checked={this.toggleStatus && this.modeStatus !== undefined}
+              onChange={() => this._handleToggle()}
+            ></item-system>
 
-            <ion-button class="btn-confirm">Valide</ion-button>
+            <ion-item class="message-item" disabled={this.modeStatus === undefined}>
+              <ion-label position="stacked">Message</ion-label>
+              <ion-input value={this.newMessage}></ion-input>
+            </ion-item>
+            <br />
+            <headline-system headline="Langue Spécifique" />
+            <br />
+
+            <ion-list class="language-choices" color="dark">
+              <ion-radio-group >
+                <ion-item>
+                  <ion-label class="label-lg">anglais - francais</ion-label>
+                  <ion-radio slot="end"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label class="label-lg">francais - anglais</ion-label>
+                  <ion-radio slot="end" ></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+            <br />
+            <ion-item class="message-item">
+              <ion-label position="stacked">Message</ion-label>
+              <ion-input value={this.newMessage}></ion-input>
+            </ion-item>
+
+            <ion-button class="btn-confirm" onClick={() => this._handleConfirmation()}>
+              Valide
+            </ion-button>
           </div>
         </div>
       </Host>
     );
   }
-  private _handleToggle(): void {
-    throw new Error('Method not implemented.');
+
+  //if confirm then save new message
+  private _handleConfirmation() {
+    this.newMessage === this.displaying;
+  }
+  //if this toggle is check then this.
+  private _handleToggle() {
+    if (this.toggleStatus === true) this.modeStatus === this.toggleStatus;
   }
 }
