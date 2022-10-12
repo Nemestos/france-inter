@@ -1,5 +1,7 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import '@ionic/core';
+import { IEditorUpdate } from '../../api/etitor.service';
+import axios from 'axios';
 
 const DEFAULT_DISPLAY_TEXT = 'Respectez le nombre de personne autorisé dans cette pièce, please';
 const DEFAULT_PERSON_DETECTED = 5;
@@ -17,7 +19,7 @@ export class ShowcaseUi {
   @Prop() imageData: string = DEFAULT_IMAGE_DATA;
   @Prop({ reflect: true }) newMessage: string;
 
-  @State() modeStatus: boolean = true;
+  @State() modeStatus: boolean;
   @State() toggleStatus: boolean;
 
   render() {
@@ -45,7 +47,6 @@ export class ShowcaseUi {
             </div>
             <div class="image-insert"></div>
             <div class="camera-actions">
-
               <ion-icon class="arrow-left" name="arrow-back"></ion-icon>
               <ion-icon class="arrow-right" name="arrow-forward"></ion-icon>
 
@@ -60,31 +61,26 @@ export class ShowcaseUi {
           </div>
 
           <div class="panel-infos">
-            <div class="studio-title">Upload studio img
-            <ion-icon class="icon-up" name="cloud-upload-outline"></ion-icon></div>
+            <div class="studio-title">
+              Upload studio img
+              <ion-icon class="icon-up" name="cloud-upload-outline"></ion-icon>
+            </div>
             <headline-system headline="Editeur" />
             <item-system active attribute="Selecteur" value="Nombre de personne autorisé">
               <ion-input class="input-number" type="number" value="0" max="20" min="0"></ion-input>
             </item-system>
             <headline-system headline="Modes Editeur" />
+            <item-system active={this.toggleStatus} attribute="Mode par default" value="Envoie un messsage par default"></item-system>
             <item-system
-              active={this.modeStatus === undefined}
-              invalide={this.modeStatus !== undefined}
-              attribute="Mode par default"
-              value="Envoie un messsage par default"
-            ></item-system>
-            <item-system
-              active={this.modeStatus !== undefined}
-              invalide={this.modeStatus === undefined}
+              active={!this.toggleStatus}
               attribute="Mode"
               value="Envoie un nouveau message"
               toggle
-              checked={this.toggleStatus && this.modeStatus !== undefined}
-              onItemToggle={(e: CustomEvent) => this._handleToggle(e.detail)}>
+              checked={!this.toggleStatus}
+              onItemToggle={() => (this.toggleStatus = !this.toggleStatus)}
+            ></item-system>
 
-              </item-system>
-
-            <ion-item class="message-item" disabled={this.modeStatus === undefined}>
+            <ion-item class="message-item" disabled={this.toggleStatus}>
               <ion-label position="stacked">Message</ion-label>
               <ion-input value={this.newMessage}></ion-input>
             </ion-item>
@@ -93,14 +89,14 @@ export class ShowcaseUi {
             <br />
 
             <ion-list class="language-choices" color="dark">
-              <ion-radio-group >
+              <ion-radio-group>
                 <ion-item>
                   <ion-label class="label-lg">anglais - francais</ion-label>
                   <ion-radio slot="end"></ion-radio>
                 </ion-item>
                 <ion-item>
                   <ion-label class="label-lg">francais - anglais</ion-label>
-                  <ion-radio slot="end" ></ion-radio>
+                  <ion-radio slot="end"></ion-radio>
                 </ion-item>
               </ion-radio-group>
             </ion-list>
@@ -119,12 +115,13 @@ export class ShowcaseUi {
     );
   }
 
-  //if confirm then save new message
-  private _handleConfirmation() {
-    this.newMessage === this.displaying;
-  }
-  //if this toggle is check then this.
-  private _handleToggle(state: boolean) {
-    if (this.toggleStatus === true) this.modeStatus === this.toggleStatus;
+  //update text & maxPerson here
+  private async _handleConfirmation() {
+    const body: IEditorUpdate = {
+      text: this.newMessage,
+      maxPersons: this.persons,
+    };
+    this.newMessage = (await axios.post('http://localhost:8080/api', { body: body })).data;
+    this.displaying = this.newMessage;
   }
 }
