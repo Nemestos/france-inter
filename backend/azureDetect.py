@@ -1,4 +1,5 @@
 import requests
+precision = 0.5
 
 def azureDetect(endpoint, key, image_path):
     
@@ -22,7 +23,7 @@ def azureDetect(endpoint, key, image_path):
     analysis = response.json()
 
     for objects in analysis['objects']:
-        if (objects["confidence"] > 0.5):
+        if (objects["confidence"] > precision):
             i += 1
     
     return i

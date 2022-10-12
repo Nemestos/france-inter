@@ -21,13 +21,19 @@ def loadEnvVar():
         elif (key[0] == "MONGODB_DB"):
             MONGODB_DB=key[1]
             
-        elif (key[0] == "AZURE_KEY"):
-            AZURE_KEY=key[1]
+        elif (key[0] == "AZURE_KEY_IMAGE"):
+            AZURE_KEY_IMAGE=key[1]
          
         elif (key[0] == "AZURE_ENDPOINT_IMAGE"):   
             AZURE_ENDPOINT_IMAGE=key[1]
+            
+        elif (key[0] == "AZURE_KEY_TRAD"):   
+            AZURE_KEY_TRAD=key[1]
+            
+        elif (key[0] == "AZURE_ENDPOINT_TRAD"):   
+            AZURE_ENDPOINT_TRAD=key[1]
            
-    return MONGODB_HOST, MONGODB_PORT, MONGODB_DB, AZURE_KEY, AZURE_ENDPOINT_IMAGE
+    return MONGODB_HOST, MONGODB_PORT, MONGODB_DB, AZURE_KEY_IMAGE, AZURE_ENDPOINT_IMAGE, AZURE_KEY_TRAD, AZURE_ENDPOINT_TRAD
 
 def mongoDbConnect(envVar):    
     try:
@@ -61,7 +67,7 @@ def checkIfExist(col, key, value):
         return True, mydoc
     else:
         return False, mydoc
-
+    
 def initDb(outputcol, imagecol, audiocol):
     output = { "image_name": "deux.jpg", "id_image": "efefe", "id_trads": "zefzf" }
     image = { "hash": "feazoefaef", "path": "path/to/file", "detect": 0 }
