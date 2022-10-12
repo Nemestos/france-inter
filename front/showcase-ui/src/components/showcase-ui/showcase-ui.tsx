@@ -80,8 +80,9 @@ export class ShowcaseUi {
               value="Envoie un nouveau message"
               toggle
               checked={this.toggleStatus && this.modeStatus !== undefined}
-              onChange={() => this._handleToggle()}
-            ></item-system>
+              onItemToggle={(e: CustomEvent) => this._handleToggle(e.detail)}>
+
+              </item-system>
 
             <ion-item class="message-item" disabled={this.modeStatus === undefined}>
               <ion-label position="stacked">Message</ion-label>
@@ -123,7 +124,7 @@ export class ShowcaseUi {
     this.newMessage === this.displaying;
   }
   //if this toggle is check then this.
-  private _handleToggle() {
+  private _handleToggle(state: boolean) {
     if (this.toggleStatus === true) this.modeStatus === this.toggleStatus;
   }
 }
