@@ -3,6 +3,8 @@ from email.mime import image
 from assets import hashfile, mongoDbConnect, loadEnvVar, checkIfExist, initDb
 from azureDetect import azureDetect
 from azureTrad import azureTrad
+from azureGen import azureGen
+import time
 
 def scan(maxpeople, file, text, language, init, verbose):
     fileName = file.split('/')[-1]
@@ -87,7 +89,9 @@ def scan(maxpeople, file, text, language, init, verbose):
         except:
             return 1, "can't use trad function'"
         
-        pathToAudio = ""
+        pathToAudio = f"{str(time.time()).replace( '.','-')}_audio_{language}.wav"
+        
+        azureGen(envVar[7], envVar[8], pathToAudio, "en-US", "en-US-JennyNeural", tradTxt)
         
         updatevalues = { "$set": { f"Trad_{language}": [tradTxt, pathToAudio] } }
         

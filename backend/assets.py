@@ -32,8 +32,14 @@ def loadEnvVar():
             
         elif (key[0] == "AZURE_ENDPOINT_TRAD"):   
             AZURE_ENDPOINT_TRAD=key[1]
+            
+        elif (key[0] == "AZURE_KEY_AUDIO"):   
+            AZURE_KEY_AUDIO=key[1]
+            
+        elif (key[0] == "AZURE_LOCATION_AUDIO"):   
+            AZURE_LOCATION_AUDIO=key[1]
            
-    return MONGODB_HOST, MONGODB_PORT, MONGODB_DB, AZURE_KEY_IMAGE, AZURE_ENDPOINT_IMAGE, AZURE_KEY_TRAD, AZURE_ENDPOINT_TRAD
+    return MONGODB_HOST, MONGODB_PORT, MONGODB_DB, AZURE_KEY_IMAGE, AZURE_ENDPOINT_IMAGE, AZURE_KEY_TRAD, AZURE_ENDPOINT_TRAD, AZURE_KEY_AUDIO, AZURE_LOCATION_AUDIO
 
 def mongoDbConnect(envVar):    
     try:
