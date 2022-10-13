@@ -118,10 +118,20 @@ export class ShowcaseUi {
   //update text & maxPerson here
   private async _handleConfirmation() {
     const body: IEditorUpdate = {
-      text: this.newMessage,
+      text: "test",
       maxPersons: this.persons,
     };
-    this.newMessage = (await axios.post('http://localhost:8080/api', { body: body })).data;
-    this.displaying = this.newMessage;
+    // console.log(this.newMessage,this.persons)
+    const formData = new FormData()
+    formData.set("text","test")
+    formData.set("maxPersons","3")
+    const resp = (await axios.post<IEditorUpdate>('http://localhost:8080/tasks', formData,{
+      headers:{
+        'Content-Type':"multipart/form-data"
+      }
+    }));
+    console.log(resp)
+    // console.log(this.newMessage)
+    // this.displaying = this.newMessage;
   }
 }
