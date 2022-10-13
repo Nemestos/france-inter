@@ -1,0 +1,75 @@
+:host {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 4px 0;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  color: white;
+
+  width: 100%;
+
+  color: var(--item-system-color, var(--text-color));
+
+  --ion-toggle-button-unchecked-button-color: 
+  --ion-icon-height: 36px;
+  --ion-icon-width: 36px;
+
+  --item-system-invalid-status: #757575;
+  --item-system-active-status: rgb(19, 152, 230);
+
+  --item-system-status-color: transparent;
+
+  --item-system-max-height: 90px;
+  --item-system-min-height: 40px;
+  max-height: var(--item-system-max-height);
+  min-height: var(--item-system-min-height);
+
+}
+
+:host([active]) {
+  --item-system-color: var(--item-system-active-status);
+}
+
+:host([invalid]) {
+  --item-system-color: var(--item-system-invalid-status);
+}
+
+.info-placeholder {
+  display: flex;
+  justify-content: flex-start;
+  flex: 1;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.info-placeholder > .status {
+ width: 5px;
+ height: 100%;
+ background-color: var(--item-system-status-color);
+}
+
+.item-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.item-placeholder > .attribute {
+  font-size: 0.73rem;
+  font-weight: 150;
+  color: white;
+}
+
+.attribute > .value {
+  font-size: 0.50rem;
+  font-weight: 100;
+  color: white;
+}
+
+.action-placeholder {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
