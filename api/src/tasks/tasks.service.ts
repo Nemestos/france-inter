@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { QueueScriptService } from 'src/queue-script/queue-script.service';
 import { IAzureScriptParams } from 'src/queue-script/queue-script.types';
+import { Image } from './image.schema';
 import { Output, OutputDocument } from './output.schema';
 import { CreateTaskDto } from './tasks.interface';
 
@@ -26,8 +27,12 @@ export class TasksService {
     return job != null;
   }
 
-  findTasks(): Promise<Output[]> {
-    return this.outputModel.find().exec();
+  async findTasks(): Promise<Output[]> {
+    return this.outputModel
+      .find()
+      .populate('id_image')
+      .populate('id_trads')
+      .exec();
   }
   async deleteTaskById(id: string) {
     try {

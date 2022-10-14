@@ -6,16 +6,12 @@ export type AudioDocument = Audio & Document;
 @Schema()
 export class Audio {
   @Prop()
-  trad_fr: string;
+  input_txt: string;
+  @Prop()
+  Trad_fr: Array<string>;
 
   @Prop()
-  trad_en: string;
-
-  @Prop()
-  file_fr: string;
-
-  @Prop()
-  file_en: string;
+  Trad_en: Array<string>;
 }
 
 export const AudioSchema = SchemaFactory.createForClass(Audio);

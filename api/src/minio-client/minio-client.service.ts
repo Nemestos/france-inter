@@ -61,9 +61,7 @@ export class MinioClientService {
       },
     );
     return {
-      url: `${this.config.get<string>('MINIO_HOST')}:${this.config.get<string>(
-        'MINIO_PORT',
-      )}/${this.config.get<string>('MINIO_BUCKET')}/${fileName}`,
+      url: fileName,
     };
   }
 }

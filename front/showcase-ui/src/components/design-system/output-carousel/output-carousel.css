@@ -10,6 +10,8 @@
   margin-right: 2rem;
   margin-top: 2rem;
   align-items: center;
+  color:white;
+  gap:10px;
 }
 .arrow-left {
   height: 40px;
@@ -27,4 +29,8 @@
   color: #ffff;
   margin-right: 1rem;
   margin-left: 0.5rem;
+}
+.button-col {
+  background-color: transparent;
+  border: none;
 }

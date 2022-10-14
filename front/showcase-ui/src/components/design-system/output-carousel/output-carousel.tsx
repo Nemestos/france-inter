@@ -11,15 +11,16 @@ export class OutputCarousel {
   @State() outputs: Output[];
   @State() currentIndex: number = 0;
   render() {
+    console.log(this.outputs);
     return (
       <Host>
         <div class="carousel-panel">{this.outputs.length == 0 ? <div>No outputs</div> : <output-item output={this.outputs[this.currentIndex]} />}</div>
         <div class="camera-actions">
-          <button onClick={() => this.addIndex(-1)}>
+          <button onClick={() => this.addIndex(-1)} class="button-col">
             <ion-icon class="arrow-left" name="arrow-back"></ion-icon>
           </button>
 
-          <button onClick={() => this.addIndex(1)}>
+          <button onClick={() => this.addIndex(1)} class="button-col">
             <ion-icon class="arrow-right" name="arrow-forward"></ion-icon>
           </button>
 
@@ -37,8 +38,9 @@ export class OutputCarousel {
       this.currentIndex = this.outputs.length - 1;
     }
   }
-  async connectedCallback() {
-    this.outputs = await getAllOutputsFake();
+  async componentWillRender() {
+    console.log('will render');
+    this.outputs = await getAllOutputs();
   }
   async onReload() {
     const outputs = await getAllOutputs();

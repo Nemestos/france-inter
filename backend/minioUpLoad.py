@@ -9,7 +9,7 @@ def uploadMinio(accessKey, secretKey, fileName, filePath):
 
     try:
         client = Minio(
-            "localhost:9000",
+            "minio:9000",
             access_key=accessKey,
             secret_key=secretKey,
             secure=False,
@@ -36,7 +36,7 @@ def downloadMinio(accessKey, secretKey, fileName):
 
     try:
         client = Minio(
-            "localhost:9000",
+            "minio:9000",
             access_key=accessKey,
             secret_key=secretKey,
             secure=False,
@@ -54,7 +54,7 @@ def downloadMinio(accessKey, secretKey, fileName):
         data = client.get_object('api-files', fileName).data
 
         return data
-    
+
     except:
         print("errofut")
 

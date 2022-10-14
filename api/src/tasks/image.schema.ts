@@ -12,7 +12,7 @@ export class Image {
   path: string;
 
   @Prop()
-  detect: number;
+  detected: number;
 }
 
 export const ImageSchema = SchemaFactory.createForClass(Image);

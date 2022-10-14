@@ -22,7 +22,7 @@ export class QueueScriptConsumer {
   runPythonScript(
     data: IAzureScriptParams,
   ): Promise<{ success: true; res: any[] }> {
-    const args = `--max ${data.maxPers} --text ${data.text} --file ${data.imagePath} --language en`;
+    const args = `--max ${data.maxPers} --text ${data.text} --file ${data.imagePath}`;
     const scriptPath = `${this.configService.get<string>(
       'SCRIPT_FOLDER_PATH',
     )}/${this.configService.get<string>('MAIN_SCRIPT_NAME')}`;
@@ -31,12 +31,14 @@ export class QueueScriptConsumer {
         scriptPath,
         {
           args: args.split(' '),
+          cwd: '/usr/src/script',
         },
         function (err, res) {
           if (err) {
             console.error(err);
             reject({ success: false, err });
           }
+          console.log(res);
 
           resolve({ success: true, res });
         },

@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 
 def loadEnvVar():
-    with open("../.env") as file:
+    with open("/usr/src/.env") as file:
         envVar = file.read()
     envVar = envVar.split('\n')
 
@@ -52,7 +52,7 @@ def loadEnvVar():
 def mongoDbConnect(envVar):
     try:
         client = pymongo.MongoClient(
-            f"{envVar[0]}://localhost:{envVar[1]}/", serverSelectionTimeoutMS=20)
+            f"mongodb://db:{envVar[1]}/", serverSelectionTimeoutMS=20)
         client.server_info()
     except:
         print("err can't connect")

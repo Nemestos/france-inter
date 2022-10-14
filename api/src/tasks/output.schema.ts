@@ -13,10 +13,10 @@ export class Output {
   max_pers: number;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Image' })
-  image: Image;
+  id_image: Image;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Audio' })
-  trads: Audio;
+  id_trads: Audio;
 }
 
 export const OutputSchema = SchemaFactory.createForClass(Output);

@@ -14,19 +14,23 @@ export class OutputItem {
       <Host>
         <div class="image-infos">
           <div class="image-detail">{this.output.image_name}</div>
-          <ion-icon class="icon-user" name="alert-circle-outline"></ion-icon>
-          <ion-icon class="icon-user" name="videocam-outline"></ion-icon>
+          <div class={`image-persons ${!this.isCorrect() ? 'correct' : 'error'}`}>
+            <p>
+              {this.output.id_image.detected}/{this.output.max_pers}
+            </p>
+            <ion-icon name="people"></ion-icon>
+          </div>
         </div>
-        <img class="image-insert" src={this.output.image.path} />
-        {this.isShowAudios() && (
+        <img class="image-insert" src={`http://localhost:9000/api-files/${this.output.id_image.path}`} />
+        {this.isCorrect() && (
           <div>
             <div class="sliding-message">
               <ion-icon class="volum-icon" name="volume-medium"></ion-icon>
-              {this.output.trads.trad_en}
+              {this.output.id_trads.Trad_en[0]}
             </div>
             <div class="sliding-message">
               <ion-icon class="volum-icon" name="volume-medium"></ion-icon>
-              {this.output.trads.trad_fr}
+              {this.output.id_trads.Trad_fr[0]}
             </div>
           </div>
         )}
@@ -35,7 +39,7 @@ export class OutputItem {
       </Host>
     );
   }
-  isShowAudios(): boolean {
-    return this.output.image.detect > this.output.max_pers;
+  isCorrect(): boolean {
+    return this.output.id_image.detected > this.output.max_pers;
   }
 }

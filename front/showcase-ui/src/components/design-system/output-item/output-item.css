@@ -14,18 +14,21 @@
 }
 .image-detail {
   width: 70%;
-  height: 50px;
+  height: 55px;
+  border-radius: 3px;
+  margin-left: -2.5rem;
+
   display: flex;
   color: white;
   background-color: #aeb9f2;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 .image-insert {
   height: 500px;
   width: 90%;
   background-color: aliceblue;
-  margin-left: 1rem;
+  margin-left: 2.5rem;
 }
 
 
@@ -49,5 +52,30 @@
   height: 60px;
   margin: 2rem;
   font-size: 20px;
-  font-family: sans-serif;
+  font-family: sans-serif;  
+}
+
+.volum-icon {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.image-persons {
+  background-color:#2691f4;
+  padding: 4px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: baseline;
+  color: white;
+  height: 50px;
+  width: 10%;
+}
+
+.correct {
+  background-color: green;
+}
+.error {
+  background-color: red;
 }

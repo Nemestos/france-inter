@@ -3,20 +3,18 @@ export interface Output {
 
   max_pers: number;
 
-  image: Image;
+  id_image: Image;
 
-  trads: Audio;
+  id_trads: Audio;
 }
 
 export interface Image {
   hash: string;
   path: string;
-  detect: number;
+  detected: number;
 }
 export interface Audio {
-  trad_fr: string;
-  trad_en: string;
-
-  file_fr: string;
-  file_en: string;
+  input_text: string;
+  Trad_fr: string[];
+  Trad_en: string[];
 }
