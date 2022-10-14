@@ -12,7 +12,7 @@
 .input-number {
   display: flex;
   justify-content: space-evenly;
-  margin: 1rem ;
+  margin: 1rem;
 }
 
 .studio-title {
@@ -196,19 +196,58 @@ ion-list {
 }
 
 .btn-confirm {
-  margin: 2rem;
+  margin: 1rem;
   font-weight: 600;
+}
+
+.test {
+  width: 50%;
+  margin-left: -2.7rem ;
+}
+
+.file-item {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  margin-left: -0.3rem;
+  margin-right: -2rem ;
+  align-items: center;
+
+}
+
+.file-i {
+  opacity: 0;
+  margin-right: 5rem;
+  width: 100px;
+  position: absolute;
+}
+
+.file-input label {
+  display: block;
+  position: relative;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background: #2591f4;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+  font-size: small;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+
 }
 
 .language-choices {
   width: 90%;
   color: white;
-
 }
 
 .message-item {
   width: 90%;
- 
 }
 
 .label-lg {
@@ -218,4 +257,3 @@ ion-list {
 ion-list {
   --ion-background-color: #1b2351;
 }
-

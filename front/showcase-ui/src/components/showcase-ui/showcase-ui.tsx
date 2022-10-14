@@ -91,19 +91,23 @@ export class ShowcaseUi {
               <ion-input value={this.text} onIonChange={e => this.handleTextChange(e)}></ion-input>
             </ion-item>
 
-            <item-system active attribute="Selecteur" value="Nombre de personne autorisé">
-              <ion-label position="stacked">Image</ion-label>
-              <input type="file" onChange={e => this.handleFileUpload(e)} />
+            <div class="file-item">
+            <item-system 
+            class="test"
+            active attribute="Selecteur" value="Nombre de personne autorisé">
             </item-system>
+            <div class="file-input">
+            <input class="file-i" id="file" type="file" onChange={e => this.handleFileUpload(e)} />  
+            <label htmlFor="file">Select file</label>
+            </div>
+            </div>
 
             <ion-button class="btn-confirm" type="submit" onClick={e => this._handleConfirmation(e)}>
               Valide
             </ion-button>
 
-            <headline-system headline="Modes Editeur" />
-
             <br />
-            <headline-system headline="Langue Spécifique" />
+            {/* <headline-system headline="Langue Spécifique" />
             <br />
 
             <ion-list class="language-choices" color="dark">
@@ -122,7 +126,7 @@ export class ShowcaseUi {
             <ion-item class="message-item">
               <ion-label position="stacked">Message</ion-label>
               <ion-input value={this.newMessage}></ion-input>
-            </ion-item>
+            </ion-item> */}
           </div>
         </div>
       </Host>
