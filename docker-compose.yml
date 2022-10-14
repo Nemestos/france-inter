@@ -13,7 +13,7 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
-      - ./script_fixture:/usr/src/script
+      - ./backend:/usr/src/script
 
     env_file:
       - .env
