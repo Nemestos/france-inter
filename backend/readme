@@ -1,0 +1,6 @@
+You may launch the file scan.py with this example:
+
+    python3 scan.py -f path/to/file -m 10 -t "attention vous avez etes arrivez a la limite"
+
+
+pip install azure-cognitiveservices-speech
