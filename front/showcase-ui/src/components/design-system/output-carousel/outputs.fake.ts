@@ -5,7 +5,7 @@ export const fakeOutputs: Output[] = [
     max_pers: 3,
     image_name: 'test',
     image: {
-      detect: 3,
+      detect: 2,
       hash: '80ea20c2b2807675e31cd6a6994f03da',
       path: 'http://localhost:9000/api-files/80ea20c2b2807675e31cd6a6994f03da.png',
     },
