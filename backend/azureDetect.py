@@ -1,14 +1,14 @@
 import requests
 precision = 0.5
 
-def azureDetect(endpoint, key, image_path):
+def azureDetect(endpoint, key, dataIn):
     
     i = 0
     analyze_url = endpoint + "vision/v3.1/analyze"
     
 
     # Read the image into a byte array
-    image_data = open(image_path, "rb").read()
+
     headers = {
     'Ocp-Apim-Subscription-Key': key,
     'Content-Type': 'application/octet-stream'
@@ -17,7 +17,8 @@ def azureDetect(endpoint, key, image_path):
     'visualFeatures': 'Objects'
     }
     response = requests.post(
-    analyze_url, headers = headers, params = params, data = image_data)
+    analyze_url, headers = headers, params = params, data = dataIn)
+
     response.raise_for_status()
 
     analysis = response.json()

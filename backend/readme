@@ -4,3 +4,5 @@ You may launch the file scan.py with this example:
 
 
 pip install azure-cognitiveservices-speech
+
+pip3 install minio
