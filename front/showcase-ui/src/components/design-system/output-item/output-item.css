@@ -1,0 +1,53 @@
+:host {
+  display: block;
+}
+
+.image-infos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-right: 2rem;
+  margin: 1rem;
+  width: 100%;
+  height: 20%;
+}
+.image-detail {
+  width: 70%;
+  height: 50px;
+  display: flex;
+  color: white;
+  background-color: #aeb9f2;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.image-insert {
+  height: 500px;
+  width: 90%;
+  background-color: aliceblue;
+  margin-left: 1rem;
+}
+
+
+.numer-wrapper {
+  display: flex;
+  color: #ffff;
+  height: 40px;
+  width: 40px;
+  margin: 1rem;
+  border-style: solid;
+  border-width: thin;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.sliding-message {
+  display: flex;
+  align-items: center;
+  background-color: #d9d9d9;
+  width: 90%;
+  height: 60px;
+  margin: 2rem;
+  font-size: 20px;
+  font-family: sans-serif;
+}

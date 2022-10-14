@@ -45,26 +45,7 @@ export class ShowcaseUi {
         </div>
 
         <div class="showcase-wrapper">
-          <div class="camera-panel">
-            <div class="image-infos">
-              <div class="image-detail">{this.imageData}</div>
-              <ion-icon class="icon-user" name="alert-circle-outline"></ion-icon>
-              <ion-icon class="icon-user" name="videocam-outline"></ion-icon>
-            </div>
-            <img class="image-insert" src="http://localhost:9000/api-files/80ea20c2b2807675e31cd6a6994f03da.png" />
-            <div class="camera-actions">
-              <ion-icon class="arrow-left" name="arrow-back"></ion-icon>
-              <ion-icon class="arrow-right" name="arrow-forward"></ion-icon>
-
-              <div class="numer-wrapper">{this.persons}</div>
-            </div>
-
-            {/* display text */}
-            <div class="sliding-message">
-              <ion-icon class="volum-icon" name="volume-medium"></ion-icon>
-              {this.displaying}
-            </div>
-          </div>
+          <output-carousel />
 
           <div class="panel-infos">
             <div class="studio-title">
@@ -91,8 +72,7 @@ export class ShowcaseUi {
               <ion-input value={this.text} onIonChange={e => this.handleTextChange(e)}></ion-input>
             </ion-item>
 
-            <item-system active attribute="Selecteur" value="Nombre de personne autorisé">
-              <ion-label position="stacked">Image</ion-label>
+            <item-system active attribute="Selecteur" value="Image">
               <input type="file" onChange={e => this.handleFileUpload(e)} />
             </item-system>
 
@@ -152,14 +132,7 @@ export class ShowcaseUi {
     formData.set('text', this.text);
     formData.set('maxPersons', this.maxPersons.toString());
     formData.set('image', this.image);
-    // const body: IEditorUpdate = {
-    //   text: this.newMessage,
-    //   maxPersons: this.persons,
-    // };
-    // // console.log(this.newMessage,this.persons)
-    // const formData = new FormData();
-    // formData.set('text', 'test');
-    // formData.set('maxPersons', '3');
+
     const resp = await axios.post<IEditorUpdate>('http://localhost:8080/tasks', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',

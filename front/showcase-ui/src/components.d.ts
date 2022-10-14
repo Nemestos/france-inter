@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Output } from "./components/design-system/output-carousel/output.type";
 export namespace Components {
     interface HeadlineSystem {
         "headline": string;
@@ -16,6 +17,11 @@ export namespace Components {
         "invalide": boolean;
         "toggle": boolean;
         "value": string;
+    }
+    interface OutputCarousel {
+    }
+    interface OutputItem {
+        "output": Output;
     }
     interface ShowcaseUi {
         "displaying": string;
@@ -42,6 +48,18 @@ declare global {
         prototype: HTMLItemSystemElement;
         new (): HTMLItemSystemElement;
     };
+    interface HTMLOutputCarouselElement extends Components.OutputCarousel, HTMLStencilElement {
+    }
+    var HTMLOutputCarouselElement: {
+        prototype: HTMLOutputCarouselElement;
+        new (): HTMLOutputCarouselElement;
+    };
+    interface HTMLOutputItemElement extends Components.OutputItem, HTMLStencilElement {
+    }
+    var HTMLOutputItemElement: {
+        prototype: HTMLOutputItemElement;
+        new (): HTMLOutputItemElement;
+    };
     interface HTMLShowcaseUiElement extends Components.ShowcaseUi, HTMLStencilElement {
     }
     var HTMLShowcaseUiElement: {
@@ -51,6 +69,8 @@ declare global {
     interface HTMLElementTagNameMap {
         "headline-system": HTMLHeadlineSystemElement;
         "item-system": HTMLItemSystemElement;
+        "output-carousel": HTMLOutputCarouselElement;
+        "output-item": HTMLOutputItemElement;
         "showcase-ui": HTMLShowcaseUiElement;
     }
 }
@@ -68,6 +88,11 @@ declare namespace LocalJSX {
         "toggle"?: boolean;
         "value"?: string;
     }
+    interface OutputCarousel {
+    }
+    interface OutputItem {
+        "output"?: Output;
+    }
     interface ShowcaseUi {
         "displaying"?: string;
         "imageData"?: string;
@@ -78,6 +103,8 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "headline-system": HeadlineSystem;
         "item-system": ItemSystem;
+        "output-carousel": OutputCarousel;
+        "output-item": OutputItem;
         "showcase-ui": ShowcaseUi;
     }
 }
@@ -87,6 +114,8 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "headline-system": LocalJSX.HeadlineSystem & JSXBase.HTMLAttributes<HTMLHeadlineSystemElement>;
             "item-system": LocalJSX.ItemSystem & JSXBase.HTMLAttributes<HTMLItemSystemElement>;
+            "output-carousel": LocalJSX.OutputCarousel & JSXBase.HTMLAttributes<HTMLOutputCarouselElement>;
+            "output-item": LocalJSX.OutputItem & JSXBase.HTMLAttributes<HTMLOutputItemElement>;
             "showcase-ui": LocalJSX.ShowcaseUi & JSXBase.HTMLAttributes<HTMLShowcaseUiElement>;
         }
     }
