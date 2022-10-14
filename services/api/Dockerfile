@@ -1,5 +1,4 @@
-FROM node:16-alpine AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+FROM nikolaik/python-nodejs:python3.10-nodejs16-alpine	AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /usr/src/app
 COPY ./api/package.json ./api/pnpm-lock.yaml ./
@@ -13,7 +12,7 @@ COPY ./api .
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 RUN npm run build
 
-FROM node:16-alpine AS runner
+FROM nikolaik/python-nodejs:python3.10-nodejs16-alpine	 AS runner
 WORKDIR /usr/src/app
 ARG APP_ENV
 COPY --from=builder /usr/src/app/build ./build

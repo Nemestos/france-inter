@@ -11,6 +11,11 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.enableCors({
+    allowedHeaders: ['content-type'],
+    origin: '*',
+    credentials: true,
+  });
   const configService = app.get(ConfigService);
   await app.listen(configService.get('API_PORT'), '0.0.0.0');
 }
