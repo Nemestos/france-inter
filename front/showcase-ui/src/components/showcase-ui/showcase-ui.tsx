@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State } from '@stencil/core';
 import '@ionic/core';
 import { IEditorUpdate } from '../../api/etitor.service';
 import axios from 'axios';
+import { InputChangeEventDetail, IonInputCustomEvent } from '@ionic/core';
 
 const DEFAULT_DISPLAY_TEXT = 'Respectez le nombre de personne autorisé dans cette pièce, please';
 const DEFAULT_PERSON_DETECTED = 5;
@@ -22,6 +23,11 @@ export class ShowcaseUi {
   @State() modeStatus: boolean;
   @State() toggleStatus: boolean;
 
+  //form
+  @State() text: string = DEFAULT_DISPLAY_TEXT;
+  @State() maxPersons: number = DEFAULT_PERSON_DETECTED;
+  @State() image: File;
+
   render() {
     return (
       <Host>
@@ -39,26 +45,7 @@ export class ShowcaseUi {
         </div>
 
         <div class="showcase-wrapper">
-          <div class="camera-panel">
-            <div class="image-infos">
-              <div class="image-detail">{this.imageData}</div>
-              <ion-icon class="icon-user" name="alert-circle-outline"></ion-icon>
-              <ion-icon class="icon-user" name="videocam-outline"></ion-icon>
-            </div>
-            <div class="image-insert"></div>
-            <div class="camera-actions">
-              <ion-icon class="arrow-left" name="arrow-back"></ion-icon>
-              <ion-icon class="arrow-right" name="arrow-forward"></ion-icon>
-
-              <div class="numer-wrapper">{this.persons}</div>
-            </div>
-
-            {/* display text */}
-            <div class="sliding-message">
-              <ion-icon class="volum-icon" name="volume-medium"></ion-icon>
-              {this.displaying}
-            </div>
-          </div>
+          <output-carousel />
 
           <div class="panel-infos">
             <div class="studio-title">
@@ -66,10 +53,10 @@ export class ShowcaseUi {
               <ion-icon class="icon-up" name="cloud-upload-outline"></ion-icon>
             </div>
             <headline-system headline="Editeur" />
+
             <item-system active attribute="Selecteur" value="Nombre de personne autorisé">
-              <ion-input class="input-number" type="number" value="0" max="20" min="0"></ion-input>
+              <ion-input class="input-number" type="number" value="0" max="20" min="0" name="maxPersons" onIonChange={e => this.handleMaxPersonsChange(e)}></ion-input>
             </item-system>
-            <headline-system headline="Modes Editeur" />
             <item-system active={this.toggleStatus} attribute="Mode par default" value="Envoie un messsage par default"></item-system>
             <item-system
               active={!this.toggleStatus}
@@ -77,15 +64,28 @@ export class ShowcaseUi {
               value="Envoie un nouveau message"
               toggle
               checked={!this.toggleStatus}
-              onItemToggle={() => (this.toggleStatus = !this.toggleStatus)}
+              onItemToggle={e => this.handleToggleStatus(e)}
             ></item-system>
 
             <ion-item class="message-item" disabled={this.toggleStatus}>
               <ion-label position="stacked">Message</ion-label>
-              <ion-input value={this.newMessage}></ion-input>
+              <ion-input value={this.text} onIonChange={e => this.handleTextChange(e)}></ion-input>
             </ion-item>
+
+            <div class="file-item">
+              <item-system class="test" active attribute="Selecteur" value="Nombre de personne autorisé"></item-system>
+              <div class="file-input">
+                <input class="file-i" id="file" type="file" onChange={e => this.handleFileUpload(e)} />
+                <label htmlFor="file">Select file</label>
+              </div>
+            </div>
+
+            <ion-button class="btn-confirm" type="submit" onClick={e => this._handleConfirmation(e)}>
+              Valide
+            </ion-button>
+
             <br />
-            <headline-system headline="Langue Spécifique" />
+            {/* <headline-system headline="Langue Spécifique" />
             <br />
 
             <ion-list class="language-choices" color="dark">
@@ -104,33 +104,44 @@ export class ShowcaseUi {
             <ion-item class="message-item">
               <ion-label position="stacked">Message</ion-label>
               <ion-input value={this.newMessage}></ion-input>
-            </ion-item>
-
-            <ion-button class="btn-confirm" onClick={() => this._handleConfirmation()}>
-              Valide
-            </ion-button>
+            </ion-item> */}
           </div>
         </div>
       </Host>
     );
   }
-
+  handleTextChange(event: IonInputCustomEvent<InputChangeEventDetail>) {
+    this.text = event.target.value.toString();
+  }
+  handleMaxPersonsChange(event: IonInputCustomEvent<InputChangeEventDetail>) {
+    this.maxPersons = parseInt(event.target.value as string);
+  }
+  handleFileUpload(event) {
+    console.log(event.target.files);
+    this.image = event.target.files[0];
+  }
+  handleToggleStatus(event) {
+    this.toggleStatus = !this.toggleStatus;
+    if (!this.toggleStatus) {
+      this.text = DEFAULT_DISPLAY_TEXT;
+    }
+  }
   //update text & maxPerson here
-  private async _handleConfirmation() {
-    const body: IEditorUpdate = {
-      text: "test",
-      maxPersons: this.persons,
-    };
-    // console.log(this.newMessage,this.persons)
-    const formData = new FormData()
-    formData.set("text","test")
-    formData.set("maxPersons","3")
-    const resp = (await axios.post<IEditorUpdate>('http://localhost:8080/tasks', formData,{
-      headers:{
-        'Content-Type':"multipart/form-data"
-      }
-    }));
-    console.log(resp)
+  private async _handleConfirmation(event: Event) {
+    event.preventDefault();
+    console.log(this.text, this.maxPersons, this.image);
+    const formData = new FormData();
+    formData.set('text', this.text);
+    formData.set('maxPersons', this.maxPersons.toString());
+    formData.set('image', this.image);
+
+    const resp = await axios.post<IEditorUpdate>('http://localhost:8080/tasks', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(resp);
+    // console.log(resp);
     // console.log(this.newMessage)
     // this.displaying = this.newMessage;
   }

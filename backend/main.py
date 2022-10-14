@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
 
-    if ( args.debug == True):
+    if (args.debug == True):
         print('File is %r' % args.path)
         print('Text is %r' % args.text)
         print('Maximum is %r' % args.maxpeople)
@@ -23,9 +23,9 @@ if __name__ == "__main__":
     try :
         result = scan(args.maxpeople, args.path, args.text, 'fr,en', args.init, args.debug)
         if (result[0] != 0):
-            print(f'\nAn error append with the exit code: {result[0]}\n\nerror:\n  {result[1]}\n')
+            print(
+                f'\nAn error append with the exit code: {result[0]}\n\nerror:\n  {result[1]}\n')
         else:
             print(f'\n{result[1]} - {result[0]}\n')
     except:
         print('Can \'t execute. no response from main')
-        
